@@ -3,6 +3,7 @@ package br.com.ivisondsb.to_do_list.controllers
 import br.com.ivisondsb.to_do_list.dto.CreateTaskDTO
 import br.com.ivisondsb.to_do_list.dto.TaskDTO
 import br.com.ivisondsb.to_do_list.services.TaskService
+import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -19,7 +20,7 @@ class TaskController(private val taskService: TaskService) {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun createTask(@RequestBody taskDTO: CreateTaskDTO): ResponseEntity<TaskDTO> {
+    fun createTask(@Valid @RequestBody taskDTO: CreateTaskDTO): ResponseEntity<TaskDTO> {
         val task = taskService.fromDTO(taskDTO)
         val savedTask = taskService.save(task)
         return ResponseEntity.ok(taskService.toDTO(savedTask))
